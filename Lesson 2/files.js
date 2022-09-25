@@ -60,8 +60,13 @@ else{
 // deleting files
 
 
+<<<<<<< HEAD
 if(fs.existsSync("./docs/deleteme.txt")){
     fs.unlink("./docs/deleteme.txt", (err) => {
+=======
+if(fs.existsSync("./'Lesson 2'/docs/deleteme.txt")){
+    fs.unlink("./'Lesson 2'/docs/deleteme.txt", (err) => {
+>>>>>>> db35e3d71c70715345973166c26b0ed7048a5e07
         if(err)
         {
             console.log(err);
