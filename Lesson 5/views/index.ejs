@@ -17,11 +17,7 @@
 
         <!-----when we use < % =  we escape special chars, so we use "-" instead of "=" we display raw HTML instead of a string value------------>
 
-        
-
-       </div>
-
-       <!---------We check for length of the array and if there are any blogs inside, we display them-------->
+        <!---------We check for length of the array and if there are any blogs inside, we display them-------->
             <% if(blogs.length>0) { %>
                     <% blogs.forEach(blog => { %>
                         
@@ -36,9 +32,13 @@
 
             
         <%- include('./partials/nav.ejs') %> 
+
+       </div>
+
+       
     
     </body>
     <footer>
-        Copyright &copy; Stoia
+        Copyright &copy; Stoia Alin
     </footer>
 </html>
