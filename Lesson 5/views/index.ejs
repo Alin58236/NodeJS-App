@@ -1,18 +1,44 @@
 <!DOCTYPE html>
 <html lang="en" dir=""ltr>
-    <head>
-        <meta charset="utf-8">
-        <title>Hopa!!</title>
-        <link rel="stylesheet" href="style.css">
-    </head>
+    
+    <%- include('./partials/head.ejs') %> 
+    
     <body>
+
+        <!------- //<% const name = 'c' %> ------putem declara variabile in html cu ejs-----> 
+
        <div class="container">
-           <h2>Not implemented yet...</h2>
+           <h2>Not implemented yet </h2>
+           
+           <!-----<%=name%>---- putem folosi valori din variabilele declarate ----->
+
            <h1>501</h1>
            <p>We have a little more work to do here</p>
-           <a href="/">Home</a>
-           <a href="about.html">About</a>
-           <a href="404.html">500</a>
+
+        <!-----when we use < % =  we escape special chars, so we use "-" instead of "=" we display raw HTML instead of a string value------------>
+
+        
+
        </div>
+
+       <!---------We check for length of the array and if there are any blogs inside, we display them-------->
+            <% if(blogs.length>0) { %>
+                    <% blogs.forEach(blog => { %>
+                        
+                        <h3 class="title"><%= blog.title %></h3>
+                        <p class="snippet"><%= blog.snippet %></p>
+
+                    <% }) %>     
+       <!--------------------------if there are no blogs in the array, we display this----------------------->
+                    <% }else{ %>
+                         <h3>There are no blogs to display</h3>
+                    <% } %>
+
+            
+        <%- include('./partials/nav.ejs') %> 
+    
     </body>
+    <footer>
+        Copyright &copy; Stoia Alin
+    </footer>
 </html>
