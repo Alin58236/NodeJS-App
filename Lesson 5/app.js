@@ -1,18 +1,38 @@
-//----------------------------INITIALIZATION-------------------------------------//
+//------------INITIALIZATION-----------//
 
 const express = require('express');
+const morgan = require('morgan');
+const mongoose= require('mongoose');
+
 
 //express app
 const app = express();
+
+//connect to MongoDB
+
+const dbURI = 'mongodb+srv://user:test1234@nodetuts.fwm8l8c.mongodb.net/?retryWrites=true&w=majority';
+mongoose.connect(dbURI, {useNewUrlParser: true, useUnifiedTopology: true})
+    .then((result) => {
+        //listen for reqests only after the connection to the database is established
+        app.listen(3000);
+        console.log("Connected to MongoDB");
+    })
+    .catch((err) => {
+        console.log(err);
+    })
+
 
 //register view engine
 app.set('view engine', 'ejs');
 
         //app.set('views', 'myviews') - to set a custom views folder ( the standard folder is 'views', which we already made)
 
-//listen for reqests
-app.listen(3000);
 
+
+//middleware and static files
+
+app.use(express.static('public'));
+app.use(morgan('dev'));
 
 app.use((req,res,next) => {
     console.log('new request made:');
@@ -22,6 +42,10 @@ app.use((req,res,next) => {
     next();
 });
 
+app.use((req,res,next) => {
+    console.log('In the next middleware');
+    next();
+});
 
 
 //----------------------------------PAGES----------------------------------------//
@@ -54,12 +78,12 @@ app.get('/blogs', (req,res) =>{
 app.get('/about', (req,res) =>{
     //res.send('<p>About Page</p>');
     //res.sendFile('./views/about.html', { root:__dirname });
-    res.render('About', {title: 'About'});
+    res.render('about', {title: 'About'});
 });
 
 //redirect
 app.get('/about-us',(req,res) => {
-    res.render('About', {title: 'AbOuT'});
+    res.render('about', {title: 'AbOuT'});
 });
 
 
@@ -70,13 +94,13 @@ app.get('/about-us',(req,res) => {
 app.get('/blogs/create', (req,res) =>{
     //res.send('<p>About Page</p>');
     //res.sendFile('./views/about.html', { root:__dirname });
-    res.render('Create', {title: 'Create a post'});
+    res.render('create', {title: 'Create a post'});
 });
 
 app.get('/create', (req,res) =>{
     //res.send('<p>About Page</p>');
     //res.sendFile('./views/about.html', { root:__dirname });
-    res.render('Create', {title: 'Create a post'});
+    res.render('create', {title: 'Create a post'});
 });
 
 //--------------------------------404-page----------------------------------//
