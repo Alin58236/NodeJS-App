@@ -14,6 +14,16 @@ app.set('view engine', 'ejs');
 app.listen(3000);
 
 
+app.use((req,res,next) => {
+    console.log('new request made:');
+    console.log('host: ', req.hostname);
+    console.log('path: ', req.path);
+    console.log('method: ', req.method);
+    next();
+});
+
+
+
 //----------------------------------PAGES----------------------------------------//
 
 
@@ -29,22 +39,27 @@ app.get('/', (req,res) =>{
     ]
 
 
-    res.render('index', {title: 'Homepage', blogs}); //to render a view (we are not sending html anymore, instead we render views)
+    res.render('index', {title: 'All Blogs', blogs}); //to render a view (we are not sending html anymore, instead we render views)
 
 });
 
+app.get('/blogs', (req,res) =>{
+    //res.send('<p>About Page</p>');
+    //res.sendFile('./views/about.html', { root:__dirname });
+    res.render('index', {title: 'All Blogs'});
+});
 
 
 
 app.get('/about', (req,res) =>{
     //res.send('<p>About Page</p>');
     //res.sendFile('./views/about.html', { root:__dirname });
-    res.render('about', {title: 'About'});
+    res.render('About', {title: 'About'});
 });
 
 //redirect
 app.get('/about-us',(req,res) => {
-    res.render('about', {title: 'AbOuT'});
+    res.render('About', {title: 'AbOuT'});
 });
 
 
@@ -55,11 +70,14 @@ app.get('/about-us',(req,res) => {
 app.get('/blogs/create', (req,res) =>{
     //res.send('<p>About Page</p>');
     //res.sendFile('./views/about.html', { root:__dirname });
-    res.render('create', {title: 'Create a post'});
-});app
+    res.render('Create', {title: 'Create a post'});
+});
 
-
-
+app.get('/create', (req,res) =>{
+    //res.send('<p>About Page</p>');
+    //res.sendFile('./views/about.html', { root:__dirname });
+    res.render('Create', {title: 'Create a post'});
+});
 
 //--------------------------------404-page----------------------------------//
 
