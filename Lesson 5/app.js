@@ -36,10 +36,11 @@ app.set('view engine', 'ejs');
 //middleware and static files
 
 app.use(express.static('public'));
+app.use(express.urlencoded({extended: true})); // for posting form data
 app.use(morgan('dev'));
 
 app.use((req,res,next) => {
-    console.log('new request made:');
+    console.log('===New request made:===');
     console.log('host: ', req.hostname);
     console.log('path: ', req.path);
     console.log('method: ', req.method);
@@ -47,7 +48,7 @@ app.use((req,res,next) => {
 });
 
 app.use((req,res,next) => {
-    console.log('Middleware done');
+    console.log('===Middleware done===');
     next();
 });
 
@@ -98,6 +99,29 @@ app.get('/blogs/create', (req,res) =>{
     //res.sendFile('./views/about.html', { root:__dirname });
     res.render('create', {title: 'Create a post'});
 });
+
+
+app.post('/blogs', (req,res) => {
+
+    console.log("===POST request made:===");
+    
+    console.log(req.body);
+    
+    const blog = new Blog(req.body);
+
+    blog.save()
+    .then((result) => {
+        res.redirect('/blogs');
+    })
+    .catch((err) => {
+        console.log(err);
+    })
+})
+
+
+
+
+
 
 
 
