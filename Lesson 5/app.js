@@ -5,6 +5,7 @@ const morgan = require('morgan');
 const mongoose= require('mongoose');
 const Blog = require('./models/blog');
 const { result } = require('lodash');
+const { render } = require('ejs');
 
 //express app
 const app = express();
@@ -100,6 +101,15 @@ app.get('/blogs/create', (req,res) =>{
     res.render('create', {title: 'Create a post'});
 });
 
+//get pentru pagini individuale dupa ID
+app.get('/blogs/:id', (req, res) => {
+    const id=req.params.id;
+    //console.log(id);
+    Blog.findById(id)
+    .then(result => {
+        res.render('details', {title: 'Blog Details', blog: result});
+    })
+})
 
 app.post('/blogs', (req,res) => {
 
@@ -120,7 +130,19 @@ app.post('/blogs', (req,res) => {
 
 
 
+//blog delete request
+app.get('/blogs/:id' , (req,res) => {
+    
+    const id= req.params.id; // ia id-ul blogului de sters
 
+    Blog.findByIdAndDelete(id) // cauta blogul in DB
+    .then(result => {
+        res.json({ redirect: '/blogs' }) //after deletion go to all blogs page
+    })
+    .catch((err) => {
+        console.log(err);
+    })
+})
 
 
 
