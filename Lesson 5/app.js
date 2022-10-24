@@ -72,12 +72,12 @@ app.get('/', (req,res) =>{
 app.get('/about', (req,res) =>{
     //res.send('<p>About Page</p>');
     //res.sendFile('./views/about.html', { root:__dirname });
-    res.render('about', {title: 'About/EN'});
+    res.render('about', {title: 'About'});
 });
 
 //redirect
 app.get('/about-us',(req,res) => {
-    res.render('about', {title: 'About-Us/EN'});
+    res.render('about', {title: 'About-Us'});
 });
 
 
@@ -90,7 +90,7 @@ app.get('/blogs', (req,res) =>{
 
     Blog.find().sort({createdAt: -1})
     .then((result) =>{
-        res.render('index', {title: 'All Blogs/EN', blogs: result} );
+        res.render('index', {title: 'All Blogs', blogs: result} );
     })
     .catch((err) => {
         console.log(err);
@@ -103,7 +103,7 @@ app.get('/blogs', (req,res) =>{
 app.get('/blogs/create', (req,res) =>{
     //res.send('<p>About Page</p>');
     //res.sendFile('./views/about.html', { root:__dirname });
-    res.render('create', {title: 'Create a post/EN'});
+    res.render('create', {title: 'Create a post'});
 });
 
 //get pentru pagini individuale dupa ID
@@ -112,14 +112,14 @@ app.get('/blogs/:id', (req, res) => {
     //console.log(id);
     Blog.findById(id)
     .then(result => {
-        res.render('details', {title: 'Blog Details/EN', blog: result});
+        res.render('details', {title: 'Blog Details', blog: result});
     })
 })
 
 app.get('/blogs/create', (req,res) =>{
     //res.send('<p>About Page</p>');
     //res.sendFile('./views/about.html', { root:__dirname });
-    res.render('create', {title: 'Create a post/EN'});
+    res.render('create', {title: 'Create a post'});
 });
 
 

@@ -150,3 +150,38 @@
     min-width: 200px;
     background-color: lightgreen;
   }
+
+
+
+  /* translate feature */
+
+
+
+  #google_translate_element select{
+    position: relative;
+    background:#ffffff;
+    color:#b81919;
+    border: 2px;
+    border-radius:6px;
+    padding:6px 8px;
+    top: 7px;
+    }
+    .goog-logo-link{
+      display:none!important;
+     }
+    .goog-te-gadget{
+    color:transparent!important;
+    } 
+    .goog-te-banner-frame{
+    display:none !important;
+    }
+    
+    #goog-gt-tt, .goog-te-balloon-frame{
+      display: none !important;
+    }
+   .goog-text-highlight{
+     background: rgba(119, 119, 119, 0.1) !important; 
+     box-shadow: none !important;
+    }
+
+   
