@@ -6,6 +6,8 @@ const mongoose= require('mongoose');
 const Blog = require('./models/blog');
 const { result } = require('lodash');
 const { render } = require('ejs');
+const path = require('path');
+
 
 //express app
 const app = express();
@@ -17,7 +19,7 @@ mongoose.connect(dbURI)
     .then((result) => {
         //listen for reqests only after the connection to the database is established
         app.listen(3000);
-        console.log("Connected to MongoDB");
+        console.log("Connected to MongoDB on port 3000");
     })
     .catch((err) => {
         console.log(err);
@@ -36,12 +38,15 @@ app.set('view engine', 'ejs');
 
 //middleware and static files
 
-app.use(express.static('public'));
+//app.use(express.static('public'));
+
+app.use(express.static(path.join(__dirname,'public')))
+
 app.use(express.urlencoded({extended: true})); // for posting form data
 app.use(morgan('dev'));
 
 app.use((req,res,next) => {
-    console.log('===New request made:===');
+    console.log('<-------------------------------------------> New request made:');
     console.log('host: ', req.hostname);
     console.log('path: ', req.path);
     console.log('method: ', req.method);
@@ -67,12 +72,12 @@ app.get('/', (req,res) =>{
 app.get('/about', (req,res) =>{
     //res.send('<p>About Page</p>');
     //res.sendFile('./views/about.html', { root:__dirname });
-    res.render('about', {title: 'About'});
+    res.render('about', {title: 'About/EN'});
 });
 
 //redirect
 app.get('/about-us',(req,res) => {
-    res.render('about', {title: 'About-Us'});
+    res.render('about', {title: 'About-Us/EN'});
 });
 
 
@@ -85,7 +90,7 @@ app.get('/blogs', (req,res) =>{
 
     Blog.find().sort({createdAt: -1})
     .then((result) =>{
-        res.render('index', {title: 'All Blogs', blogs: result} );
+        res.render('index', {title: 'All Blogs/EN', blogs: result} );
     })
     .catch((err) => {
         console.log(err);
@@ -98,7 +103,7 @@ app.get('/blogs', (req,res) =>{
 app.get('/blogs/create', (req,res) =>{
     //res.send('<p>About Page</p>');
     //res.sendFile('./views/about.html', { root:__dirname });
-    res.render('create', {title: 'Create a post'});
+    res.render('create', {title: 'Create a post/EN'});
 });
 
 //get pentru pagini individuale dupa ID
@@ -107,9 +112,16 @@ app.get('/blogs/:id', (req, res) => {
     //console.log(id);
     Blog.findById(id)
     .then(result => {
-        res.render('details', {title: 'Blog Details', blog: result});
+        res.render('details', {title: 'Blog Details/EN', blog: result});
     })
 })
+
+app.get('/blogs/create', (req,res) =>{
+    //res.send('<p>About Page</p>');
+    //res.sendFile('./views/about.html', { root:__dirname });
+    res.render('create', {title: 'Create a post/EN'});
+});
+
 
 app.post('/blogs', (req,res) => {
 
@@ -131,15 +143,15 @@ app.post('/blogs', (req,res) => {
 
 
 //blog delete request
-app.get('/blogs/:id' , (req,res) => {
+app.delete('/blogs/:id' , (req,res) => {
     
     const id= req.params.id; // ia id-ul blogului de sters
 
     Blog.findByIdAndDelete(id) // cauta blogul in DB
     .then(result => {
-        res.json({ redirect: '/blogs' }) //after deletion go to all blogs page
+        res.json({ redirect: '/blogs' }); //after deletion go to 'all blogs' page
     })
-    .catch((err) => {
+    .catch(err => {
         console.log(err);
     })
 })
